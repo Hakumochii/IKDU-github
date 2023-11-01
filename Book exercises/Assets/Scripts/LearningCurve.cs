@@ -23,9 +23,36 @@ public class LearningCurve : MonoBehaviour
 
     public int PlayerLives = 3;
 
+    public Transform CamTransform;
+
     // Start is called before the first frame update
     void Start()
     {
+        CamTransform = this.GetComponent<Transform>();
+        Debug.Log(CamTransform.localPosition);
+
+        Weapon huntingBow = new Weapon("Hunting Bow", 105);
+
+        Weapon warBow = huntingBow;
+        warBow.name = "war Bow";
+        warBow.damage = 155;
+
+        Character hero = new Character();
+        hero.PrintStatsInfo();
+
+        /*Character hero2 = hero;
+        hero2.name = "Sir Krane the Brave";
+        hero2.PrintStatsInfo();
+        */
+
+        Character heroine = new Character("Agatha");
+        heroine.PrintStatsInfo();
+
+        Paladin knight = new Paladin("Sir Arthur", huntingBow);
+        knight.PrintStatsInfo();
+
+        
+
         Debug.Log(30 + 1);
         Debug.Log(CurrentAge + 1);
 
