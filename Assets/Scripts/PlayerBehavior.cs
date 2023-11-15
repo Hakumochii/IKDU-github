@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class PlayerBehavior : MonoBehaviour
 {
+    public GameObject Bullet;
+    public float BulletSpeed = 100f;
+    private bool _isShooting;
+
     public float DistanceToGround = 0.1f;
     public LayerMask GroundLayer;
     private CapsuleCollider _col;
@@ -28,6 +32,8 @@ public class PlayerBehavior : MonoBehaviour
 
     void Update()
     {
+        _isShooting |= Input.GetMouseButtonDown(0);
+
         _isJumping |= Input.GetKeyDown(KeyCode.Space);
 
         _vInput = Input.GetAxis("Vertical") * MoveSpeed; 
@@ -43,6 +49,17 @@ public class PlayerBehavior : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (_isShooting)
+        {
+            GameObject newBullet = Instantiate(Bullet, this.transform.position + new Vector3(1, 0, 0), this.transform.rotation);
+
+            Rigidbody BulletRB = newBullet.GetComponent<Rigidbody>();
+
+            BulletRB.velocity = this.transform.forward * BulletSpeed;
+        }
+
+        _isShooting = false;
+
         if(IsGrounded() && _isJumping)
         {
             _rb.AddForce(Vector3.up * JumpVelocity, ForceMode.Impulse);
